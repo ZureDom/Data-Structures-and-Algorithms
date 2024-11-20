@@ -33,8 +33,9 @@ void oDestoryList(Olist *l);
  * @brief 向链表插入节点
  * @param l 被插入的链表的指针
  * @param n 插入节点
+ * @return 如果链表长度达到最大时，则插入失败
  */
-void oInsertNodeToList(Olist *l, Onode *n);
+int oInsertNodeToList(Olist *l, Onode *n);
 /**
  * @brief 查询并返回一个节点，该节点满足cmp的返回值为true
  * @param l 需要查询的链表的指针

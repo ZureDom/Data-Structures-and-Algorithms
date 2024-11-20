@@ -24,8 +24,10 @@ void oDestoryList(Olist *l){
 }
 
 
-void oInsertNodeToList(Olist *l, Onode *n){
+int oInsertNodeToList(Olist *l, Onode *n){
     assert(l != NULL && n != NULL);
+    size_t c = l->count;
+    if (c > (c + 1)) return -1;
     Onode *tmp_n = l->head.next;
 
     l->head.next = n;
