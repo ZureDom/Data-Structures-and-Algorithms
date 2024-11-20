@@ -16,9 +16,8 @@
 ```c
 //test.c
 #include "olist.h"//0
-struct A{
-  Onode obj;//1
-  struct mystruct mydata;//2  
+struct mystruct{
+  int i;
 };
 int main(void){
     Olist *l = oCreateList();
@@ -26,6 +25,7 @@ int main(void){
     Onode *n = oCreateNode(&a, sizeof(struct mystruct));
     oInsertNodeToList(l, n);
     oDeleteNodeInList(l, n);
+    struct mystruct data = oGetData(n);
     oDestoryNode(n);
 }
 ```

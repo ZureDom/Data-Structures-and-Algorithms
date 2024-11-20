@@ -43,7 +43,9 @@ Onode *oCreateNode(const void *data, size_t size){
 void oDestoryNode(Onode *node){
     ofree(node);
 }
-
+void *oGetData(Onode *n){
+    return (n + sizeof(Onode));
+}
 void oInsertNodeToList(Olist *l, Onode *n){
 
     Onode *tmp_n = l->head.next;

@@ -37,6 +37,12 @@ void oDestoryList(Olist *l);
  */
 Onode *oCreateNode(const void *data, size_t size);
 /**
+ * @brief 返回一个节点的用户数据
+ * @param n 节点
+ * @return 返回的用户数据
+ */
+void * oGetData(Onode *n);
+/**
  * @brief 销毁一个节点
  * @param node 被销毁节点的指针
  */
@@ -75,4 +81,5 @@ Onode *oDeleteNodeInList(Olist *l, Onode *n);
  * @return 返回链表长度
  */
 size_t oGetListLength(Olist *l);
+
 #endif
