@@ -1,19 +1,7 @@
-
-#include <string.h>
-#include <stdbool.h>
-
+#include <assert.h>
 #include "omalloc.h"
 #include "olist.h"
-
-
-struct _Onode{
-    struct _Onode *next, *prev;
-    size_t size;
-};
-struct _Olist{
-    struct _Onode head, tail;
-    size_t count;
-};
+#include "onode.h"
 
 Olist *oCreateList(){
     Olist *ptr = omalloc(sizeof(Olist));
@@ -27,27 +15,17 @@ Olist *oCreateList(){
     return ptr;
 }
 void oDestoryList(Olist *l){
+    assert(l != NULL);
     size_t count = l->count;
     for (int i = 0; i < count; i++){
-        oDestoryNode(oDeleteNode(l, l->head.next));
+        oDestoryNode(oDeleteNodeInList(l, l->head.next));
     }
     ofree(l);
 }
 
-Onode *oCreateNode(const void *data, size_t size){
-    Onode *ptr = omalloc(size + sizeof(Onode));
-    memcpy(ptr + sizeof(Onode), data, size);
-    ptr->size = size;
-    return ptr;
-}
-void oDestoryNode(Onode *node){
-    ofree(node);
-}
-void *oGetData(Onode *n){
-    return (n + sizeof(Onode));
-}
-void oInsertNodeToList(Olist *l, Onode *n){
 
+void oInsertNodeToList(Olist *l, Onode *n){
+    assert(l != NULL && n != NULL);
     Onode *tmp_n = l->head.next;
 
     l->head.next = n;
@@ -58,9 +36,9 @@ void oInsertNodeToList(Olist *l, Onode *n){
 }
 
 Onode *oInquireNodeInList(const Olist *l, bool (*cmp)(const void *args, void *node), const void *args){
-    
+    assert(l != NULL && cmp != NULL && args != NULL);
     //size_t count = l->count;
-    Onode **ptr = &(l->head.next);
+    Onode **ptr = (Onode **const)&(l->head.next);
     bool flag = 0;
 
     while ((*ptr)->size != 0){
@@ -73,14 +51,14 @@ Onode *oInquireNodeInList(const Olist *l, bool (*cmp)(const void *args, void *no
     return NULL;
 }
 Onode *oAtList(const Olist *l, size_t index){
-
+    assert(l != NULL);
     size_t count = l->count;
     if (index == -1 && count != 0){
         return l->tail.prev;
     }
     if (index >= count || index < 0) return NULL;
 
-    Onode **ptr = &(l->head.next);
+    Onode **ptr = (Onode **const)&(l->head.next);
     for (int i = 0; i != index; i++){
         *ptr = (*ptr)->next;
     }
@@ -88,6 +66,7 @@ Onode *oAtList(const Olist *l, size_t index){
     return *ptr;
 }
 Onode *oDeleteNodeInList(Olist *l, Onode *n){
+    assert(l != NULL && n != NULL);
     n->prev->next = n->next;
     n->next->prev = n->prev;
     n->prev = NULL;
@@ -97,6 +76,7 @@ Onode *oDeleteNodeInList(Olist *l, Onode *n){
 }
 
 size_t oGetListLength(Olist *l){
+    assert(l != NULL);
     return l->count;
 }
 

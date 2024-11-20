@@ -7,16 +7,15 @@
 
 #ifndef __OLIST_H__
 #define __OLIST_H__
-#include <stdlib.h>
-struct _Onode{
-    struct _Onode *next, *prev;
-    size_t size;
-};
+#include <stdbool.h>
+#include <stddef.h>
+#include "onode.h"
+
 struct _Olist{
     struct _Onode head, tail;
     size_t count;
 };
-typedef struct _Onode Onode;
+
 typedef struct _Olist Olist;
 /**
  * @brief 创建一个空链表
@@ -29,24 +28,7 @@ Olist *oCreateList();
  * @param l 被销毁链表的指针
  */
 void oDestoryList(Olist *l);
-/**
- * @brief 创建一个节点
- * @param data 用户数据
- * @param size 用户数据大小
- * @return 返回一个指向被创建的节点的指针
- */
-Onode *oCreateNode(const void *data, size_t size);
-/**
- * @brief 返回一个节点的用户数据
- * @param n 节点
- * @return 返回的用户数据
- */
-void * oGetData(Onode *n);
-/**
- * @brief 销毁一个节点
- * @param node 被销毁节点的指针
- */
-void oDestoryNode(Onode *node);
+
 /**
  * @brief 向链表插入节点
  * @param l 被插入的链表的指针
